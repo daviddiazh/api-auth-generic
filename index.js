@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
 require('dotenv').config();
+const userRouter = require('./routes/user.router')
 
 const { checkApiKey } = require('./middlewares/auth.handler');
 
@@ -15,6 +16,8 @@ app.use(cors());
 app.get('/', (req, res) => {
     res.send('Welcome to Hair Room API!');
 })
+
+app.use('/auth', userRouter)
 
 app.get('/api/auth/testMiddleware', checkApiKey, (req, res) => {
     res.send('You are authorized!');
