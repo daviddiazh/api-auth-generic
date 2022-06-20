@@ -10,4 +10,26 @@ const checkApiKey = (req, res, next) => {
     }
 }
 
-module.exports = { checkApiKey }
+const checkAdminRole = (req, res, next) => {
+    const user = req.user;
+
+    if(user.role === 'admin'){
+        next();
+    } else {
+        next(new Error('Tu rol no te permite hacer esta acción.'))
+    }
+}
+
+const checkRoles = (...roles) => {
+    return (req, res, next) => {
+        const user = req.user;
+        if (roles.includes(user.role)) {
+            next();
+        } else {
+            next(new Error('Tu rol no te permite hacer esta acción.'));
+        }
+    };
+}
+  
+
+module.exports = { checkApiKey, checkAdminRole, checkRoles }

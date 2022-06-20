@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 require('dotenv').config();
 const userRouter = require('./routes/user.router')
 
-const { checkApiKey } = require('./middlewares/auth.handler');
+const { checkApiKey, checkAdminRole, checkRoles } = require('./middlewares/auth.handler');
 const passport = require('passport');
 const { session } = require('passport');
 
@@ -23,9 +23,35 @@ app.get('/', (req, res) => {
 
 app.use('/api/auth', userRouter)
 
-//? This is a example for routes blocked!
-app.get('/api/auth/testMiddleware', 
+//? This is a example for routes blocked for used of TOKEN!
+app.get('/api/auth/testToken', 
     passport.authenticate('jwt', { session: false }),
+    (req, res, next) => {
+        try {
+            res.status(200).json('You are authorized!');
+        } catch (error) {
+            next(error)
+        }
+    }
+)
+
+//? This is a example for routes blocked for used of TOKEN AND checked ROLE!
+app.get('/api/auth/testTokenAndRole',
+    passport.authenticate('jwt', { session: false }),
+    checkAdminRole,
+    (req, res, next) => {
+        try {
+            res.status(200).json('You are authorized!');
+        } catch (error) {
+            next(error)
+        }
+    }
+)
+
+//? This is a example for routes blocked for used of TOKEN AND checked ROLE!
+app.get('/api/auth/testTokenAndRoles',
+    passport.authenticate('jwt', { session: false }),
+    checkRoles('admin', 'seller'),
     (req, res, next) => {
         try {
             res.status(200).json('You are authorized!');
