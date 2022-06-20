@@ -11,4 +11,4 @@ function signToken (payload, secret) {
 }
 
 const token = signToken(payload, secret);
-console.log('TOKEN: ', token);
+//console.log('TOKEN: ', token);

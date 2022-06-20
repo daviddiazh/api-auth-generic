@@ -8,4 +8,4 @@ function verifyToken (token, secret) {
 }
 
 const payload = verifyToken(token, secret);
-console.log('VERIFY TOKEN: ', payload);
+//console.log('VERIFY TOKEN: ', payload);

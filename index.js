@@ -5,6 +5,8 @@ require('dotenv').config();
 const userRouter = require('./routes/user.router')
 
 const { checkApiKey } = require('./middlewares/auth.handler');
+const passport = require('passport');
+const { session } = require('passport');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -13,7 +15,6 @@ app.use(express.json());
 app.use(cors());
 
 require('./utils/auth/index');
-require('./utils/jwt/token-verify')
 
 // Routes
 app.get('/', (req, res) => {
@@ -22,9 +23,17 @@ app.get('/', (req, res) => {
 
 app.use('/api/auth', userRouter)
 
-app.get('/api/auth/testMiddleware', checkApiKey, (req, res) => {
-    res.send('You are authorized!');
-})
+//? This is a example for routes blocked!
+app.get('/api/auth/testMiddleware', 
+    passport.authenticate('jwt', { session: false }),
+    (req, res, next) => {
+        try {
+            res.status(200).json('You are authorized!');
+        } catch (error) {
+            next(error)
+        }
+    }
+)
 
 // Connect to MongoDB
 mongoose.connect(process.env.MONGODB_URI)
