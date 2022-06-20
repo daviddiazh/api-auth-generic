@@ -1,9 +1,11 @@
 const express = require('express');
+const passport = require('passport');
+const jwt = require('jsonwebtoken');
 const validatorHandler = require('../middlewares/validator.handler');
 const userService = require('../services/user.service');
 const userModel = require('../models/User');
-const passport = require('passport');
 
+const { config } = require('./../config/index');
 const router = express.Router();
 
 router.post('/signIn', 
@@ -23,7 +25,15 @@ router.post('/login',
     passport.authenticate('local', { session: false }),
     async (req, res, next) => {
         try {
-            res.json(req.user)
+            const user = req.user;
+            const payload = {
+                id: user.id,
+                role: user.role,
+                //name: user.name
+                //TODO: Here sends all the data of user.
+            }
+            const token = jwt.sign(payload, config.jwtSecret);
+            res.json({ user, token })
         } catch (error) {
             next(error);
         }
