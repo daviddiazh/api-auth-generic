@@ -12,12 +12,14 @@ const port = process.env.PORT || 3000;
 app.use(express.json());
 app.use(cors());
 
+require('./utils/auth/index')
+
 // Routes
 app.get('/', (req, res) => {
-    res.send('Welcome to Hair Room API!');
+    res.send('Welcome to Auth API, by David Diaz!');
 })
 
-app.use('/auth', userRouter)
+app.use('/api/auth', userRouter)
 
 app.get('/api/auth/testMiddleware', checkApiKey, (req, res) => {
     res.send('You are authorized!');

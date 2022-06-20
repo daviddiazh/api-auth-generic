@@ -19,13 +19,14 @@ const findAll = async () => {
     return data;
 }
 
-const findOne = async (id) => {
-     
+const findByEmail = async (email) => {
+    const data = await userModel.findOne({email});
+    return data;
 }
 
 
 module.exports = {
     createUser,
     findAll,
-    findOne
+    findByEmail
 }
