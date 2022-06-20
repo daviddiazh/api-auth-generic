@@ -12,7 +12,8 @@ const port = process.env.PORT || 3000;
 app.use(express.json());
 app.use(cors());
 
-require('./utils/auth/index')
+require('./utils/auth/index');
+require('./utils/jwt/token-verify')
 
 // Routes
 app.get('/', (req, res) => {
