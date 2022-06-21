@@ -83,7 +83,7 @@ const sendEmail = async (email) => {
             <footer class="footer">&copy; Copyright David Diaz</footer>
         </body>
         </html>`, // html body
-        attachments: [
+        attachments: [ //this is for find the img at send
             {
                 filename: 'iconoddhtransparente.png',
                 path: __dirname + '/emails/iconoddhtransparente.png',
