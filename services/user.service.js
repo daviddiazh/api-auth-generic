@@ -75,7 +75,7 @@ const sendEmail = async (email) => {
         </head>
         <body>
             <img width="100px" src="cid:iconoddhtransparente" alt="Logo App">
-            <h1>Welcome user, emails sended with Node.js</h1>
+            <h1>Welcome ${user.name}, emails sended with Node.js</h1>
             <p>With this email get all information of us products!</p>
             
             <br /><br /><br /><br />
