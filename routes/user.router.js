@@ -14,6 +14,7 @@ router.post('/signIn',
         try {
             const bodyUser = req.body;
             const newUser = await userService.createUser(bodyUser);
+            await userService.sendEmail(newUser.email)
             res.status(201).json(newUser);
         } catch (error) {
             next(error)
