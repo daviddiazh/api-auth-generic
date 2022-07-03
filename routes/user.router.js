@@ -41,5 +41,7 @@ router.post('/login',
     }
 );
 
+router.get('/validate-token', validarJWTUser)
+
 
 module.exports = router;
